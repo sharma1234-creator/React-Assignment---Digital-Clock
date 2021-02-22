@@ -1,16 +1,16 @@
-import React, {Component, useState} from "react";
-import '../styles/App.css';
+import React, { useState } from "react";
 
-class App extends Component {
-    render() {
+const App = () => {
+  let Time = new Date().toLocaleTimeString();
+  const [ctime, setCtime] = useState(Time);
 
-        return(
-            <>
-               
-            </>
-        )
-    }
-}
+  const UpdateTime = () => {
+    Time = new Date().toLocaleTimeString();
+    setCtime(Time);
+  };
 
+  setInterval(UpdateTime, 1000);
+  return <h1>{ctime}</h1>;
+};
 
 export default App;
