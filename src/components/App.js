@@ -1,16 +1,96 @@
-import React, { useState } from "react";
+import React, {Component, useState} from "react";
 
-const App = () => {
-  let Time = new Date().toLocaleTimeString();
-  const [ctime, setCtime] = useState(Time);
+import '../styles/App.css';
 
-  const UpdateTime = () => {
-    Time = new Date().toLocaleTimeString();
-    setCtime(Time);
-  };
+ 
 
-  setInterval(UpdateTime, 1000);
-  return <h1>{ctime}</h1>;
-};
+class App extends Component {
+
+ constructor() {
+
+ super()
+
+ this.state = {
+
+ time: new Date().toLocaleTimeString()
+
+ }
+
+ 
+
+this.dateFunction = this.dateFunction.bind(this)
+
+ }
+
+ 
+
+dateFunction() {
+
+ let date = new Date()
+
+ let updateHour = date.getHours()
+
+ let updateMinute = date.getMinutes()
+
+ let updateSecond = date.getSeconds()
+
+ 
+
+let updateAMPM = updateHour < 13 ? 'AM' : 'PM'
+
+ if(updateMinute < 10) updateMinute = `0${updateMinute}`
+
+ if(updateSecond < 10) updateSecond = `0${updateSecond}`
+
+ let updateTime = `${updateHour}:${updateMinute}:${updateSecond} ${updateAMPM}`
+
+ 
+
+this.setState({time: updateTime})
+
+ }
+
+ 
+
+componentDidMount() {
+
+ this.loadInterval = setInterval(this.dateFunction, 1000)
+
+ }
+
+ 
+
+componentWillUnmount() {
+
+ clearInterval(this.loadInterval)
+
+ }
+
+ 
+
+render() {
+
+ 
+
+return(
+
+ <>
+
+ <div className="Clock">
+
+ <h3 id="time">{this.state.time}</h3>
+
+ </div>
+
+ </>
+
+ )
+
+ }
+
+}
+
+ 
 
 export default App;
+
