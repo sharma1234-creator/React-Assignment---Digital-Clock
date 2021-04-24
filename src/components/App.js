@@ -1,96 +1,41 @@
-import React, {Component, useState} from "react";
-
+import React, {Component,createRef, useState} from "react";
 import '../styles/App.css';
 
- 
-
 class App extends Component {
+    constructor(props){
+        super(props)
+        this.state ={
+            
+            time: new Date(),  
+        }
+        //this.timerid = setInterval(()=>this.foo,1000)
+       
+       // this.state.tm =  setInterval(()=>{  this.setState({time : new Date(), })},1000)
+        this.foo  = this.foo.bind(this);
+    }
 
- constructor() {
+    foo(){
+        this.setState({time: new Date()})
+    }
 
- super()
-
- this.state = {
-
- time: new Date().toLocaleTimeString()
-
- }
-
- 
-
-this.dateFunction = this.dateFunction.bind(this)
-
- }
-
- 
-
-dateFunction() {
-
- let date = new Date()
-
- let updateHour = date.getHours()
-
- let updateMinute = date.getMinutes()
-
- let updateSecond = date.getSeconds()
-
- 
-
-let updateAMPM = updateHour < 13 ? 'AM' : 'PM'
-
- if(updateMinute < 10) updateMinute = `0${updateMinute}`
-
- if(updateSecond < 10) updateSecond = `0${updateSecond}`
-
- let updateTime = `${updateHour}:${updateMinute}:${updateSecond} ${updateAMPM}`
-
- 
-
-this.setState({time: updateTime})
-
- }
-
- 
-
-componentDidMount() {
-
- this.loadInterval = setInterval(this.dateFunction, 1000)
-
- }
-
- 
-
-componentWillUnmount() {
-
- clearInterval(this.loadInterval)
-
- }
-
- 
-
-render() {
-
- 
-
-return(
-
- <>
-
- <div className="Clock">
-
- <h3 id="time">{this.state.time}</h3>
-
- </div>
-
- </>
-
- )
-
- }
-
+   
+    componentDidMount(){
+        this.timerid = setInterval(this.foo,1000)
+        //console.log("this runs");
+    }   
+    componentWillUnmount(){
+        clearInterval(this.timerid);
+    }
+  
+    
+    render() {
+       
+        return(
+            <div className = "Clock">
+                <h2 id="time">{this.state.time.toLocaleTimeString()}</h2>
+            </div>
+        );
+    }
 }
 
- 
-
 export default App;
-
